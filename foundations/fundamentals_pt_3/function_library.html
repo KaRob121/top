@@ -43,13 +43,17 @@
     }
     
     function squareRoot(num) {
-        // using long division method
         if (num < 0) {
             num = 'an imaginary number';
         } else {
             num = Math.sqrt(num);
         }
 
+        return num;
+    }
+
+    function cubeRoot(num) {
+        num = Math.cbrt(num);
         return num;
     }
 
@@ -61,7 +65,8 @@
             para.textContent = num + ' squared is ' + squared(num) + '. ' +
                                num + ' cubed is ' + cubed(num) + '. ' +
                                num + ' factorial is ' + factorial(num) + '. ' +
-                               'The square root of ' + num + ' is ' + squareRoot(num) + '. ';
+                               'The square root of ' + num + ' is ' + squareRoot(num) + '. ' +
+                               'The cube root of ' + num + ' is ' + cubeRoot(num) + '. ';
         }
     }
 
