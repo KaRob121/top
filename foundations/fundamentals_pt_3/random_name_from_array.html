@@ -32,7 +32,11 @@
     // Add your code here
 
     function chooseName() {
-        para.textContent = names[Math.floor(Math.random() * names.length)];
+        // Math.random() * names.length results in a random number from 0 to (length of array)
+        // Math.floor() ensures the index being looked up is between 0 to ((length of array) - 1)
+
+        let randomNum = Math.floor(Math.random() * names.length);
+        para.textContent = names[randomNum];
     }
 
     // Don't edit the code below here!
