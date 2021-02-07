@@ -1,0 +1,42 @@
+<!-- Coding exercise from https://javascript.info/function-basics -->
+<!-- Write a function pow(x,n) that returns x in power n. Or, in other words, multiplies x by itself n times and returns the result. Create a web-page that prompts for x and n, and then shows the result of pow(x,n). -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Power Function</title>
+    <style>
+        input {
+            font-size: 2em;
+            margin: 10px 1px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <p></p>
+    <button onClick="window.location.reload();">Again?</button>
+
+    <script>
+        const para = document.querySelector('p');
+
+        let x = prompt("Enter a number: ");
+        let n = prompt("Enter a power: ");
+        let i;
+
+        function pow(num, power) { 
+            let ans = 1;
+            for (i = 0; i < power; i++) {
+                ans *= num;
+                console.log(ans);
+            }
+            return ans;
+        }
+
+        para.textContent = x + " to the power of " + n + " is " + pow(x, n);
+    </script>
+</body>
+
+</html>
