@@ -16,17 +16,17 @@
         const subBttn = document.getElementById("towHeightBttn");
 
         function setUpGame() {
-            var towerHeight = document.getElementById("towHeight").value;
-            var pole1 = function() {
-                let list = ["pole1"];
+            var towerHeight = parseInt(document.getElementById("towHeight").value);
+            var createPole1 = function() {
+                let list = ["pol1"];
                 for (let i = 0; i < towerHeight; i++) {
                     list.push(i + 1);
                 }
                 return list;
             };
-            var pole2 = ["pole2"], pole3 = ["pole3"];
-
-            return [towerHeight, pole1(), pole3, pole2];
+            var pole1 = createPole1(), pole2 = ["pol2"], pole3 = ["pol3"];
+            arrToRet = [towerHeight, pole1, pole3, pole2];
+            return arrToRet;
         }
 
         function towerOfHanoi(gameSettings) {
@@ -38,31 +38,39 @@
             if (height === 1) {
                 dest.push(src.pop());
             } else {
-                // towerOfHanoi([height - 1, src, extra, dest]);
+                console.log("before");
+                console.log(src);
+                console.log(dest);
+                console.log(extra);
+                towerOfHanoi([height - 1 , src, extra, dest]);
+                console.log("after");
+                console.log(src);
+                console.log(dest);
+                console.log(extra);
                 dest.push(src.pop())
-                // towerOfHanoi([height - 1, extra, dest, src]);
+                console.log("before");
+                console.log(src);
+                console.log(dest);
+                console.log(extra);
+                towerOfHanoi([height - 1, extra, dest, src]);
+                console.log("after");
+                console.log(src);
+                console.log(dest);
+                console.log(extra);
             }
-            console.log(src);
-            console.log(dest);
-            console.log(extra);
         }
 
         subBttn.onclick = function () {
             gameSettings = setUpGame();
-            console.log(gameSettings);
+            console.log("Start");
             towerOfHanoi(gameSettings);
         }
 
-        // console.log(src)
-        // console.log()
-
-    //     function output(value) {
-    //   const para = document.createElement('p');
-    //   document.body.appendChild(para);
-    //   para.textContent = 'Value: ' + value;
-    // }
-
-
+        // function output(value) {
+        //     const para = document.createElement('p');
+        //     document.body.appendChild(para);
+        //     para.textContent = 'Value: ' + value;
+        // }
     </script>
 </body>
 
