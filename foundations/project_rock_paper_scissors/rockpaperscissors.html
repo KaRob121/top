@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rock Paper Scissors</title>
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    <script>
+        
+        // Computer randomly chooses from rock, paper, or scissors
+        function computerPlay() {
+            const choices = ["Rock", "Paper", "Scissors"];
+            return choices[Math.floor(Math.random() * choices.length)]
+        }
+
+        // Asks the user to enter whether they want to put out rock, paper, or scissors
+        function promptUserRockPaperScissors() {
+            return prompt("Enter rock, paper, or scissors");
+        }
+
+        // Prints out the result of a game of rock, paper, scissors with the computer
+        function playRound(playerSelection, computerSelection) {
+            computerSelection = computerPlay().toLowerCase();
+            playerSelection = promptUserRockPaperScissors().toLowerCase();
+
+            // Player wins
+            if ((playerSelection == "rock" && computerSelection == "scissors") 
+                || (playerSelection == "scissors" && computerSelection == "paper")
+                || (playerSelection == "paper" && computerSelection == "rock")) {
+                return `You win! ${playerSelection} beats ${computerSelection}`;
+            } 
+            // No one wins
+            else if (playerSelection == computerSelection ) {
+                return `No one wins! ${computerSelection} is the same as ${playerSelection}`;
+            }
+            // Computer wins
+            else {
+                return `You lose! ${computerSelection} beats ${playerSelection}`;
+            }
+        }
+
+        // Play rock, paper, scissors with the computer 5 times
+        function game() {
+            for (let i = 0; i < 5; i++) {
+                console.log(`Round ${i+1}`);
+                console.log(playRound());
+            }
+        }
+        
+        // Starts the game
+        game();
+
+    </script>
+</body>
+
+</html>
