@@ -1,76 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Tower of Hanoi</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="tower-of-hanoi.css">
 </head>
 
 <body>
     <h1>Tower of Hanoi</h1>
     <p>How tall is your tower?</p>
-    <input id="towHeight" type="number">
-    <button id="towHeightBttn" type="submit">Enter</button>
+    <input id="tower-height-input" type="number">
+    <button id="tower-height-bttn" type="submit">Enter</button>
 
     <script>
-        const subBttn = document.getElementById("towHeightBttn");
+        const subBttn = document.getElementById("tower-height-bttn");
 
         function setUpGame() {
-            var towerHeight = parseInt(document.getElementById("towHeight").value);
-            var createPole1 = function() {
-                let list = ["pol1"];
+            function createPole1() {
+                let list = [];
                 for (let i = 0; i < towerHeight; i++) {
                     list.push(i + 1);
                 }
                 return list;
             };
-            var pole1 = createPole1(), pole2 = ["pol2"], pole3 = ["pol3"];
+
+            let towerHeight = parseInt(document.getElementById("tower-height-input").value);
+            let pole1 = createPole1(), pole2 = [], pole3 = [];
             arrToRet = [towerHeight, pole1, pole3, pole2];
             return arrToRet;
+        }
+        
+        function createPoleDisplay(pole1, pole2, pole3) {
+            const pole1Config = document.createElement("div");
+            pole1Config.classList.add("pole1");
+            const pole2Config = document.createElement("div");
+            pole2Config.classList.add("pole2");
+            const pole3Config = document.createElement("div");
+            pole3Config.classList.add("pole3");
+            const block = document.createElement("div");
+            block.classList.add("block");
+
+            console.log(pole1);
+
+            pole1.map((numOfBlocks) => {
+                pole1Config.appendChild(block);
+            });
+            pole2.map((numOfBlocks) => {
+                pole2Config.appendChild(block);
+            });
+            pole3.map((numOfBlocks) => {
+                pole3Config.appendChild(block);
+            });
+
+            return [pole1Config, pole2Config, pole3Config];
+        }
+
+        function displayCurrentConfiguration(pole1, pole2, pole3) {
+            const poleConfigs = createPoleDisplay(pole1, pole2, pole3);
+
+            console.log(poleConfigs[0]);
+            console.log(poleConfigs[1]);
+            console.log(poleConfigs[2]);
+
+            // pole1Config.appendChild(block) 
+            // pole1Config.appendChild("block")
+            // document.body.appendChild(poleConfig);
         }
 
         function towerOfHanoi(gameSettings) {
             let height = gameSettings[0];
-            let src = gameSettings[1];
+            let start = gameSettings[1];
             let dest = gameSettings[2];
             let extra = gameSettings[3];
 
+            // let start = pole1;
+            // let dest = pole3;
+            // let extra = pole2;
+
             if (height === 1) {
-                dest.push(src.pop());
+                console.log("before");
+                console.log(start);
+                console.log(dest);
+                console.log(extra);
+                dest.push(start.pop());
+                console.log("after");
+                console.log(start);
+                console.log(dest);
+                console.log(extra);
             } else {
                 console.log("before");
-                console.log(src);
+                console.log(start);
                 console.log(dest);
                 console.log(extra);
-                towerOfHanoi([height - 1 , src, extra, dest]);
+                towerOfHanoi([height - 1 , start, extra, dest]);
                 console.log("after");
-                console.log(src);
+                console.log(start);
                 console.log(dest);
                 console.log(extra);
-                dest.push(src.pop())
+                dest.push(start.pop())
                 console.log("before");
-                console.log(src);
+                console.log(start);
                 console.log(dest);
                 console.log(extra);
-                towerOfHanoi([height - 1, extra, dest, src]);
+                towerOfHanoi([height - 1, extra, dest, start]);
                 console.log("after");
-                console.log(src);
+                console.log(start);
                 console.log(dest);
                 console.log(extra);
             }
+
+            displayCurrentConfiguration(start, extra, dest);
         }
 
         subBttn.onclick = function () {
             gameSettings = setUpGame();
             console.log("Start");
+            displayCurrentConfiguration(gameSettings[1], gameSettings[2], gameSettings[3]);
             towerOfHanoi(gameSettings);
         }
-
-        // function output(value) {
-        //     const para = document.createElement('p');
-        //     document.body.appendChild(para);
-        //     para.textContent = 'Value: ' + value;
-        // }
     </script>
 </body>
 
