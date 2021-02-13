@@ -7,6 +7,10 @@
 </head>
 
 <body>
+    <div id="game-results">
+
+    </div>
+
     <script>
         
         // Computer randomly chooses from rock, paper, or scissors
@@ -16,8 +20,10 @@
         }
 
         // Asks the user to enter whether they want to put out rock, paper, or scissors
+        // Trims the user input of extra whitespace
         function promptUserRockPaperScissors() {
-            return prompt("Enter rock, paper, or scissors");
+            let userInput = prompt("Enter rock, paper, or scissors")
+            return userInput.trim();
         }
 
         // Prints out the result of a game of rock, paper, scissors with the computer
@@ -29,23 +35,35 @@
             if ((playerSelection == "rock" && computerSelection == "scissors") 
                 || (playerSelection == "scissors" && computerSelection == "paper")
                 || (playerSelection == "paper" && computerSelection == "rock")) {
-                return `You win! ${playerSelection} beats ${computerSelection}`;
+                return `You win! You chose ${playerSelection} and the computer chose ${computerSelection}`;
             } 
             // No one wins
             else if (playerSelection == computerSelection ) {
-                return `No one wins! ${computerSelection} is the same as ${playerSelection}`;
+                return `No one wins! You chose ${playerSelection} and the computer chose ${computerSelection}`;
             }
             // Computer wins
             else {
-                return `You lose! ${computerSelection} beats ${playerSelection}`;
+                return `You lose! You chose ${playerSelection} and the computer chose ${computerSelection}`;
             }
         }
 
         // Play rock, paper, scissors with the computer 5 times
         function game() {
             for (let i = 0; i < 5; i++) {
-                console.log(`Round ${i+1}`);
-                console.log(playRound());
+                // console.log(`Round ${i+1}`);
+                // console.log(playRound());
+                
+                let par = document.createElement("p");
+                let parContent = document.createTextNode(`Round ${i+1}`);
+                par.appendChild(parContent);
+                let display = document.getElementById("game-results");
+                display.appendChild(par);
+
+                par = document.createElement("p");
+                parContent = document.createTextNode(playRound());
+                par.appendChild(parContent);
+                display = document.getElementById("game-results");
+                display.appendChild(par);
             }
         }
         
