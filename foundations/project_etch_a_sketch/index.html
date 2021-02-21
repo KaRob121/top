@@ -5,11 +5,31 @@
     <title>Etch-a-Sketch</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" type="text/css" href="styles/etch_a_sketch.css">
+    <!-- Pacifico font from Google Fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <script type="text/javascript" src="javascript/etch_a_sketch.js" async></script>
 </head>
 
 <body>
+    <h1>Etch-a-Sketch</h1>
+    <div id="input-area">
+        <div id="grid-size">
+            <p>Grid Size</p>
+            <input 
+                type="range" 
+                min="1" 
+                max="10" 
+                value="4"
+                id="slider"
+            />
+        </div>
+        <button id="reset-bttn" type="reset">Reset</button>
+    </div>
     <div id="container"></div>
+    <footer>
+        <p>Made by: Karl Espinosa<br><a href="https://github.com/KaRob121" target="_blank">GitHub</a> || <a href="https://www.linkedin.com/in/karlespinosa" target="_blank">LinkedIn</a> </p>
+    </footer>
 </body>
 
 </html>
