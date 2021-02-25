@@ -39,20 +39,28 @@ function addKeyEventListeners(keys) {
             })
         }
         else if ([...key.classList].includes('oper')) {
-            // Insert function call to update expr array
             key.addEventListener('click', (e) => {
                 updateExpression(key.textContent);
             })
         }
         else if (document.getElementById('eq') === key) {
-            // Insert function call to update expr and call operate function
             key.addEventListener('click', (e) => {
                 evalExpression();
+            })
+        }
+        else if (document.getElementById('clear') === key) {
+            key.addEventListener('click', (e) => {
+                const displayTextNode = document
+                    .getElementById('display-text');
+                clearDisplay();
+                displayTextNode.textContent = '0';
+                expr.length = 0;
             })
         }
     })
 }
 
+// Changes the number in the calculator display
 function appendToDisplay(char) {
     const displayTextNode = document
         .getElementById('display-text');
@@ -68,6 +76,8 @@ function appendToDisplay(char) {
     if (displayText === '0') {
         // Prevents a number from starting with a decimal
         if (char !== '.') displayTextNode.textContent = char;
+        
+        else displayTextNode.textContent += char;
     }
     else {
         // Prevents a decimal from being added more than once
@@ -84,33 +94,36 @@ function clearDisplay() {
     displayTextNode.textContent = '';
 }
 
-function updateExpression(operator) {
+// Stores the operator and first operand of an expression for later use
+function updateExpression(operator) {    
+    if (expr) {
+        evalExpression();
+    }    
     const displayText = document
         .getElementById('display-text')
         .textContent;
-    
     expr.push(operator);
     expr.push(displayText);
 
     isNewNum = true;
 }
 
+// Evaluate and display the result of an expression
 function evalExpression() {
     const displayTextNode = document.getElementById('display-text');
     let displayText = document
         .getElementById('display-text')
         .textContent;
 
-    console.log(expr)
-    const result = operate(expr[0], +expr[1], +displayText)
-    displayTextNode.textContent = result;
-    expr.length = 0;
-    console.log(expr)
+    if (expr.length) {
+        const result = operate(expr[0], +expr[1], +displayText)
+        displayTextNode.textContent = result;
+        expr.length = 0;
+    }
 }
 
 const keys = document.querySelectorAll('.key');
 let expr = [];
 let isNewNum = true;
-
 
 addKeyEventListeners(keys)
