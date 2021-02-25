@@ -57,6 +57,11 @@ function addKeyEventListeners(keys) {
                 expr.length = 0;
             })
         }
+        else if (document.getElementById('del') === key) {
+            key.addEventListener('click', (e) => {
+                deleteLastChar();
+            })
+        }
     })
 }
 
@@ -120,6 +125,14 @@ function evalExpression() {
         displayTextNode.textContent = result;
         expr.length = 0;
     }
+}
+
+function deleteLastChar() {
+    const displayTextNode = document.getElementById('display-text');
+    const length = displayTextNode.textContent.length;
+
+    if (length-1) displayTextNode.textContent = displayTextNode.textContent.slice(0, -1);
+    else displayTextNode.textContent = '0';
 }
 
 const keys = document.querySelectorAll('.key');
