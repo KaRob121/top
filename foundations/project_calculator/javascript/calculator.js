@@ -7,9 +7,11 @@ function operate(operator, num1, num2) {
             return subtract(num1, num2);
             break;
         case '×':
+        case '*':
             return multiply(num1, num2);
             break;
         case '÷':
+        case '/':
             return divide(num1, num2);
             break;
     }
@@ -50,10 +52,7 @@ function addKeyEventListeners(keys) {
         }
         else if (document.getElementById('clr') === key) {
             key.addEventListener('click', (e) => {
-                const displayTextNode = document
-                    .getElementById('display-text');
                 clearDisplay();
-                // displayTextNode.textContent = '0';
                 expr.length = 0;
             })
         }
@@ -67,16 +66,9 @@ function addKeyEventListeners(keys) {
 
 // Changes the number in the calculator display
 function appendToDisplay(char) {
-    // const displayTextNode = document
-    //     .getElementById('display-text');
-    // let displayText = displayTextNode.textContent;
-    // let textLength = displayText.length;
-
     // Clears the display if the expression array is not empty, meaning an operator key has been pressed
     if (isNewNum) {
-        console.log("Hello")
         clearDisplay();
-        // displayText = '0';
         isNewNum = false;
     }
 
@@ -85,7 +77,6 @@ function appendToDisplay(char) {
     let displayText = displayTextNode.textContent;
     let textLength = displayText.length;
 
-    console.log(displayText)
     if (displayText === '0') {
         // Prevents a number from starting with a decimal
         if (char !== '.') displayTextNode.textContent = char;
@@ -107,7 +98,7 @@ function clearDisplay() {
 }
 
 // Stores the operator and first operand of an expression for later use
-function updateExpression(operator) {    
+function updateExpression(operator) {  
     if (expr) {
         evalExpression();
     }    
@@ -147,3 +138,22 @@ let expr = [];
 let isNewNum = true;
 
 addKeyEventListeners(keys)
+
+window.addEventListener('keyup', (e) => {
+    let key = e.key;
+    let numbers = /[0-9]|\./;
+    let operators = /\+|\-|\*|\//;
+
+    if (numbers.test(key)) {
+        appendToDisplay(key);
+    }
+    else if (operators.test(key)) {
+        updateExpression(key);
+    }
+    else if (key === 'Enter') {
+        evalExpression();
+    }
+    else if (key === 'Backspace') {
+        deleteLastChar();
+    }
+});
