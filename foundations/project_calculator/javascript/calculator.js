@@ -48,7 +48,7 @@ function addKeyEventListeners(keys) {
                 evalExpression();
             })
         }
-        else if (document.getElementById('clear') === key) {
+        else if (document.getElementById('clr') === key) {
             key.addEventListener('click', (e) => {
                 const displayTextNode = document
                     .getElementById('display-text');
