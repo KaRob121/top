@@ -53,7 +53,7 @@ function addKeyEventListeners(keys) {
                 const displayTextNode = document
                     .getElementById('display-text');
                 clearDisplay();
-                displayTextNode.textContent = '0';
+                // displayTextNode.textContent = '0';
                 expr.length = 0;
             })
         }
@@ -67,17 +67,25 @@ function addKeyEventListeners(keys) {
 
 // Changes the number in the calculator display
 function appendToDisplay(char) {
-    const displayTextNode = document
-        .getElementById('display-text');
-    let displayText = displayTextNode.textContent;
-    let textLength = displayText.length;
+    // const displayTextNode = document
+    //     .getElementById('display-text');
+    // let displayText = displayTextNode.textContent;
+    // let textLength = displayText.length;
 
     // Clears the display if the expression array is not empty, meaning an operator key has been pressed
     if (isNewNum) {
+        console.log("Hello")
         clearDisplay();
+        // displayText = '0';
         isNewNum = false;
     }
 
+    const displayTextNode = document
+    .getElementById('display-text');
+    let displayText = displayTextNode.textContent;
+    let textLength = displayText.length;
+
+    console.log(displayText)
     if (displayText === '0') {
         // Prevents a number from starting with a decimal
         if (char !== '.') displayTextNode.textContent = char;
@@ -86,7 +94,6 @@ function appendToDisplay(char) {
     else {
         // Prevents a decimal from being added more than once
         if (char === '.') {
-            console.log(displayText.indexOf('.'))
             if (displayText.indexOf('.') === -1) displayTextNode.textContent += char;
         }
         else displayTextNode.textContent += char;
@@ -96,7 +103,7 @@ function appendToDisplay(char) {
 function clearDisplay() {
     const displayTextNode = document
         .getElementById('display-text');
-    displayTextNode.textContent = '';
+    displayTextNode.textContent = '0';
 }
 
 // Stores the operator and first operand of an expression for later use
