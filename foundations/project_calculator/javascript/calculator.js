@@ -81,12 +81,12 @@ function appendToDisplay(char) {
     if (displayText === '0') {
         // Prevents a number from starting with a decimal
         if (char !== '.') displayTextNode.textContent = char;
-        
         else displayTextNode.textContent += char;
     }
     else {
         // Prevents a decimal from being added more than once
         if (char === '.') {
+            console.log(displayText.indexOf('.'))
             if (displayText.indexOf('.') === -1) displayTextNode.textContent += char;
         }
         else displayTextNode.textContent += char;
