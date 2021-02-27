@@ -3,4 +3,4 @@ This repository will contain my work as I follow along
 
 Projects:
 * [Etch-a-Sketch](https://karob121.github.io/top/foundations/project_etch_a_sketch/)
-* [Calculator (WIP)](https://karob121.github.io/top/foundations/project_calculator/)
+* [Calculator](https://karob121.github.io/top/foundations/project_calculator/)
