@@ -3,7 +3,7 @@
 # to implement my solution, but these methods did not account 
 # for duplicates of the substring. I came upon the String#scan method
 # while looking at the solutions of other people (specifically
-# rlmoser and Angel Mitev) for ideas.
+# rlmoser and Angel Mitev) on the The Odin Project site for ideas.
 
 # Takes in a string and a dictionary, returning a hash containing 
 # the number of occurences of a substring in the passed string if that 
