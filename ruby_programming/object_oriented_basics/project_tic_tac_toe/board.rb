@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'invalid_square_error'
+
 # Tic Tac Toe Board class
 class Board
   def initialize
@@ -14,9 +16,22 @@ class Board
     end
   end
 
-  # def update(player, square)
-  #   @configuration.each do |row|
-  #     p @configuration
-  #   end
-  # end
+  def update(player, square)
+    found_square = false
+    @configuration.each do |row|
+      if row.include?(square)
+        found_square = true
+        row[row.index(square)] = player.piece
+      end
+    end
+    raise InvalidSquareError unless found_square == true
+  end
+
+  def full?
+    @configuration.flatten.count('X') + @configuration.flatten.count('O') == 9
+    # case @configuration
+    # in [['X', 'X', 'X'], *]
+  end
+
+  # def winning?
 end

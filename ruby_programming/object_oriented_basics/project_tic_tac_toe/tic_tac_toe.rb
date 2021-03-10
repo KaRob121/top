@@ -2,6 +2,14 @@
 
 require_relative 'player'
 require_relative 'board'
+require_relative 'invalid_square_error'
+
+def restart_or_end(scenario)
+  case scenario
+  when -1
+    puts 'Uh oh! No one won. Try again?'
+  end
+end
 
 puts 'Tic Tac Toe'
 
@@ -29,14 +37,25 @@ board = Board.new
 
 turn = 1
 loop do
-  if turn.odd?
-    puts "\nIt's #{first_turn.name} turn! You are #{first_turn.piece}."
-  else
-    puts "\nIt's #{second_turn.name} turn! You are #{second_turn.piece}."
+  if turn.odd? && player1.turn.odd? || turn.even? && player1.turn.even?
+    current_player = player1
+  elsif turn.odd? && player2.turn.odd? || turn.even? && player2.turn.even?
+    current_player = player2
   end
-  board.show_board
-  puts 'Enter a number from 1 to 9 where you want to place your piece:'
-  # board.update(gets.chomp)
 
+  puts "\nIt's #{current_player.name}'s turn! You are #{current_player.piece}."
+  board.show_board
+  begin
+    puts 'Enter a number from 1 to 9 where you want to place your piece:'
+    board.update(current_player, gets.chomp.to_i)
+  rescue InvalidSquareError => e
+    puts 'You can\'t place your piece there!'
+    retry
+  end
+
+  if board.full?
+    restart_or_end(-1)
+    break
+  end
   turn += 1
 end
