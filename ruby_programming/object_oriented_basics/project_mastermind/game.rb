@@ -8,8 +8,8 @@ class Game
   CODE_PEG4 = '  4  '.colorize(background: :magenta)
   CODE_PEG5 = '  5  '.colorize(background: :cyan)
   CODE_PEG6 = '  6  '.colorize(color: :black, background: :yellow)
-  CORRECT_NUMBER = ' ● '
-  CORRECT_NUMBER_AND_PLACE = ' ● '.colorize(color: :red)
+  CORRECT_NUMBER = '●'
+  CORRECT_NUMBER_AND_PLACE = '●'.colorize(color: :red)
 
   def self.setup_game
     puts ' Mastermind '.colorize(color: :black, background: :white)
@@ -31,8 +31,8 @@ class Game
 
       You have 12 chances at breaking the code.
       After each guess, you will be given hints on how close you are to the correct answer.
-      For each correct number in the correct spot, a #{CORRECT_NUMBER_AND_PLACE} will be printed out.
-      If you have a correct number, but in the wrong spot, a #{CORRECT_NUMBER} will be printed out.
+      For each correct number in the correct spot, a  #{CORRECT_NUMBER_AND_PLACE}  will be printed out.
+      If you have a correct number, but in the wrong spot, a  #{CORRECT_NUMBER}  will be printed out.
 
       Good luck!
       ----------------------------------------------------------------------------
@@ -45,6 +45,10 @@ class Game
       guess = Player.guess
       print_guess(guess)
       print_hint(guess, code)
+      if correct_guess?(guess, code)
+        puts "You figured out the code! It was #{code}."
+        break
+      end
     end
   end
 
@@ -63,6 +67,7 @@ class Game
 
   def self.print_hint(guess, code)
     display = []
+    # already_seen = []
     code_array = code.chars
     guess.each_char.with_index do |char, index|
       if code_array[index] == char
@@ -72,6 +77,13 @@ class Game
       end
     end
     print "#{display.shuffle.sort.join(' ')}\n"
+  end
+
+  def self.correct_guess?(guess, code)
+    guess.to_i == code.to_i
+  end
+
+  def self.restart_or_end_game
   end
 
   private

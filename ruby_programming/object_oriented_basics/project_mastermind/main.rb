@@ -7,3 +7,4 @@ require_relative 'player'
 
 Game.setup_game
 Game.game_loop
+Game.restart_or_end_game
