@@ -3,11 +3,7 @@
 require 'colorize'
 require_relative 'game'
 require_relative 'computer'
+require_relative 'player'
 
-def main
-  puts ' Mastermind '.colorize(color: :black, background: :white)
-  Game.rules
-  game = Game.new
-end
-
-main
+Game.setup_game
+Game.game_loop
