@@ -8,7 +8,7 @@ class Computer < Game
     puts 'Making code...'
     sleep(0.5)
     code = ''
-    4.times do |i|
+    4.times do
       code += [1, 2, 3, 4, 5, 6].sample.to_s
     end
     puts 'The code has been made.'

@@ -10,6 +10,7 @@ class Game
   CODE_PEG6 = '  6  '.colorize(color: :black, background: :yellow)
   CORRECT_NUMBER = '●'
   CORRECT_NUMBER_AND_PLACE = '●'.colorize(color: :red)
+  VALID_GUESS_CHARS = ['1', '2', '3', '4', '5', '6']
 
   def self.setup_game
     puts ' Mastermind '.colorize(color: :black, background: :white)
@@ -42,7 +43,15 @@ class Game
   def self.game_loop
     code = Computer.make_code
     12.times do
-      guess = Player.guess
+      begin
+        guess = Player.guess
+      rescue InvalidGuessLengthError => error
+        puts error
+        retry
+      rescue InvalidGuessContentError => error
+        puts error
+        retry
+      end
       print_guess(guess)
       print_hint(guess, code)
       if correct_guess?(guess, code)
