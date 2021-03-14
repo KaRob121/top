@@ -42,16 +42,9 @@ class Game
 
   def self.game_loop
     code = Computer.make_code
+    puts code
     12.times do
-      begin
-        guess = Player.guess
-      rescue InvalidGuessLengthError => error
-        puts error
-        retry
-      rescue InvalidGuessContentError => error
-        puts error
-        retry
-      end
+      guess = player_guess
       print_guess(guess)
       print_hint(guess, code)
       if correct_guess?(guess, code)
@@ -59,6 +52,15 @@ class Game
         break
       end
     end
+  end
+
+  def self.player_guess
+    guess = Player.guess
+  rescue InvalidGuessError => e
+    puts e
+    retry
+  else
+    guess
   end
 
   def self.print_guess(guess)
@@ -76,16 +78,14 @@ class Game
 
   def self.print_hint(guess, code)
     display = []
-    # already_seen = []
-    code_array = code.chars
-    guess.each_char.with_index do |char, index|
-      if code_array[index] == char
+    code.each_char.with_index do |char, index|
+      if guess.index(char, index) == index
         display.push(CORRECT_NUMBER_AND_PLACE)
-      elsif code_array.include?(char)
-        display.push(CORRECT_NUMBER)
+        next
       end
+      display.push(CORRECT_NUMBER) if guess.index(char)
     end
-    print "#{display.shuffle.sort.join(' ')}\n"
+    print "#{display.sort.join(' ')}\n"
   end
 
   def self.correct_guess?(guess, code)

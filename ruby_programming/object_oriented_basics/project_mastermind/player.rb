@@ -7,8 +7,7 @@ class Player < Game
   def self.guess
     puts "\nWhat is your guess?"
     guess = gets.chomp
-    raise InvalidGuessLengthError unless valid_guess_length?(guess)
-    raise InvalidGuessContentError unless valid_guess_content?(guess)
+    raise InvalidGuessError unless valid_guess_length?(guess) && valid_guess_content?(guess)
 
     guess
   end
