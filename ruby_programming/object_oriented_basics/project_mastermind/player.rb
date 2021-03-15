@@ -5,7 +5,7 @@ require_relative 'game'
 # Player class
 class Player < Game
   def self.guess
-    puts "\nWhat is your guess?"
+    print "What is your guess?\n"
     guess = gets.chomp
     raise InvalidGuessError unless valid_guess_length?(guess) && valid_guess_content?(guess)
 

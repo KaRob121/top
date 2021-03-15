@@ -10,7 +10,7 @@ class Game
   CODE_PEG6 = '  6  '.colorize(color: :black, background: :yellow)
   CORRECT_NUMBER = '●'
   CORRECT_NUMBER_AND_PLACE = '●'.colorize(color: :red)
-  VALID_GUESS_CHARS = ['1', '2', '3', '4', '5', '6']
+  VALID_GUESS_CHARS = %w[1 2 3 4 5 6].freeze
 
   def self.setup_game
     puts ' Mastermind '.colorize(color: :black, background: :white)
@@ -36,25 +36,25 @@ class Game
       If you have a correct number, but in the wrong spot, a  #{CORRECT_NUMBER}  will be printed out.
 
       Good luck!
-      ----------------------------------------------------------------------------
     HEREDOC
   end
 
   def self.game_loop
+    puts '----------------------------------------------------------------------------'
     code = Computer.make_code
-    puts code
-    12.times do
-      guess = player_guess
+    12.times do |turn|
+      guess = player_guess(turn + 1)
       print_guess(guess)
       print_hint(guess, code)
-      if correct_guess?(guess, code)
-        puts "You figured out the code! It was #{code}."
-        break
-      end
+      break if correct_guess?(guess, code)
+
+      puts "The code was #{code}! Better luck next time." if turn + 1 == 12
     end
+    restart_or_end_game
   end
 
-  def self.player_guess
+  def self.player_guess(turn)
+    print "\nTurn #{turn}: "
     guess = Player.guess
   rescue InvalidGuessError => e
     puts e
@@ -77,27 +77,48 @@ class Game
   end
 
   def self.print_hint(guess, code)
-    display = []
-    code.each_char.with_index do |char, index|
-      if guess.index(char, index) == index
-        display.push(CORRECT_NUMBER_AND_PLACE)
-        next
+    hint = determine_hint(guess.split(''), code.split(''), [])
+    print "#{hint.sort.join(' ')}\n"
+  end
+
+  def self.determine_hint(guess_arr, code_arr, hint)
+    guess_arr.each_with_index do |char, index|
+      if code_arr[index] == char
+        hint.push(CORRECT_NUMBER_AND_PLACE)
+        code_arr[index] = '-'
+      elsif code_arr.include?(char)
+        hint.push(CORRECT_NUMBER)
+        code_arr[code_arr.index(char)] = '-'
       end
-      display.push(CORRECT_NUMBER) if guess.index(char)
     end
-    print "#{display.sort.join(' ')}\n"
+    hint
   end
 
   def self.correct_guess?(guess, code)
+    puts "You figured out the code! It was #{code}." if guess.to_i == code.to_i
     guess.to_i == code.to_i
   end
 
   def self.restart_or_end_game
+    puts "\nDo you want to play again? Type y for yes or n for no."
+    choice = gets.chomp
+    case choice.downcase
+    when 'y'
+      game_loop
+    when 'n'
+      print_contact_info
+      exit
+    end
+  end
+
+  def self.print_contact_info
+    puts <<~HEREDOC
+      \nThanks for playing Mastermind!
+      Made by Karl Espinosa for The Odin Project\n
+    HEREDOC
   end
 
   private
 
   attr_accessor :code
-
-  private_class_method :print_guess, :print_hint
 end
