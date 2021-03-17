@@ -6,3 +6,10 @@ class InvalidGuessError < StandardError
     super(msg)
   end
 end
+
+# custom InvalidRoleError class
+class InvalidRoleError < StandardError
+  def initialize(msg = 'Invalid role. Please choose between being 1 (codebreaker) or the 2 (codemaker.')
+    super(msg)
+  end
+end

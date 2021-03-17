@@ -15,6 +15,7 @@ class Game
   def self.setup_game
     puts ' Mastermind '.colorize(color: :black, background: :white)
     rules
+    Player.choose_role
   end
 
   def self.rules
@@ -22,7 +23,7 @@ class Game
 
       Welcome to Mastermind!
 
-      In this game, the goal is to break a random 4-digit code created by the computer.
+      In this game, the goal is to break your opponent's random 4-digit code.
       This code consists 4 of the following numbers:
       #{CODE_PEG1} #{CODE_PEG2} #{CODE_PEG3} #{CODE_PEG4} #{CODE_PEG5} #{CODE_PEG6}
 
@@ -30,20 +31,23 @@ class Game
       #{CODE_PEG3} #{CODE_PEG2} #{CODE_PEG1} #{CODE_PEG3}
       *Note that a number can be repeated in the code, such as #{CODE_PEG3} in the example above.
 
-      You have 12 chances at breaking the code.
-      After each guess, you will be given hints on how close you are to the correct answer.
-      For each correct number in the correct spot, a  #{CORRECT_NUMBER_AND_PLACE}  will be printed out.
-      If you have a correct number, but in the wrong spot, a  #{CORRECT_NUMBER}  will be printed out.
+      You can choose to either break the computer's secret code or create a secret code for the computer to break.
+      The code breaker will have 12 guesses to break the code.
+      After each guess, they will be given hints on how close they are to the correct answer.
+      For each correct number in the correct spot in the guess, a  #{CORRECT_NUMBER_AND_PLACE}  will be printed out.
+      If there is a correct number in the guess, but in the wrong spot, a  #{CORRECT_NUMBER}  will be printed out.
 
       Good luck!
+
     HEREDOC
   end
 
   def self.game_loop
     puts '----------------------------------------------------------------------------'
     code = Computer.make_code
+    code = 2363.to_s
     12.times do |turn|
-      guess = player_guess(turn + 1)
+      guess = Player.guess(turn + 1)
       print_guess(guess)
       print_hint(guess, code)
       break if correct_guess?(guess, code)
@@ -51,16 +55,6 @@ class Game
       puts "The code was #{code}! Better luck next time." if turn + 1 == 12
     end
     restart_or_end_game
-  end
-
-  def self.player_guess(turn)
-    print "\nTurn #{turn}: "
-    guess = Player.guess
-  rescue InvalidGuessError => e
-    puts e
-    retry
-  else
-    guess
   end
 
   def self.print_guess(guess)
@@ -86,7 +80,7 @@ class Game
       if code_arr[index] == char
         hint.push(CORRECT_NUMBER_AND_PLACE)
         code_arr[index] = '-'
-      elsif code_arr.include?(char)
+      elsif code_arr.include?(char) && code_arr.index(char) == guess_arr[code_arr.index(char)]
         hint.push(CORRECT_NUMBER)
         code_arr[code_arr.index(char)] = '-'
       end
@@ -105,17 +99,7 @@ class Game
     case choice.downcase
     when 'y'
       game_loop
-    when 'n'
-      print_contact_info
-      exit
     end
-  end
-
-  def self.print_contact_info
-    puts <<~HEREDOC
-      \nThanks for playing Mastermind!
-      Made by Karl Espinosa for The Odin Project\n
-    HEREDOC
   end
 
   private

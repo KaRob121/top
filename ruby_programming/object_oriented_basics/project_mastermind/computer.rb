@@ -5,7 +5,7 @@ require_relative 'game'
 # Computer class
 class Computer < Game
   def self.make_code
-    puts 'Making code...'
+    puts 'Your opponent is making a code...'
     sleep(0.5)
     code = ''
     4.times do
