@@ -19,6 +19,7 @@ role = Game.setup_game
 case role
 when 1
   puts 'You are the codebreaker.'
+  puts '----------------------------------------------------------------------------'
   Game.game_loop # game loop for player as codebreaker
 when 2
   Game.game_loop # game loop for player as codemaker

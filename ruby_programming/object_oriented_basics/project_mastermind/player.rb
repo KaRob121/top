@@ -17,8 +17,6 @@ class Player < Game
     raise InvalidRoleError unless valid_role?(role)
 
     role
-  # rescue InvalidRoleError => e
-  #   puts e
   end
 
   def self.valid_role?(role)

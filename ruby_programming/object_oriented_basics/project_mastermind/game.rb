@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pry-byebug'
+
 # Mastermind game class
 class Game
   CODE_PEG1 = '  1  '.colorize(background: :green)
@@ -43,9 +45,8 @@ class Game
   end
 
   def self.game_loop
-    puts '----------------------------------------------------------------------------'
     code = Computer.make_code
-    code = 2363.to_s
+    # code = 2363.to_s
     12.times do |turn|
       guess = Player.guess(turn + 1)
       print_guess(guess)
@@ -80,11 +81,14 @@ class Game
       if code_arr[index] == char
         hint.push(CORRECT_NUMBER_AND_PLACE)
         code_arr[index] = '-'
-      elsif code_arr.include?(char) && code_arr.index(char) == guess_arr[code_arr.index(char)]
+        # puts "RED"
+      elsif code_arr.include?(char) && code_arr[code_arr.index(char)] != guess_arr[code_arr.index(char)]
         hint.push(CORRECT_NUMBER)
         code_arr[code_arr.index(char)] = '-'
+        # puts "WHITE"
       end
     end
+    # puts code_arr
     hint
   end
 
